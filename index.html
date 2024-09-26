@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thib Iron Fist Tournament</title>
+    <script type="module" src="index.js"></script>
+</head>
+<body>
+    <h1>Thib Iron Fist Tournament</h1>
+    <form id="characterSelectionForm">
+        <label for="character">Choisissez votre personnage :</label>
+        <select id="character">
+            <option value="Fighter">Grace (Fighter)</option>
+            <option value="Paladin">Ulder (Paladin)</option>
+            <option value="Monk">Moana (Monk)</option>
+            <option value="Berserker">Draven (Berserker)</option>
+            <option value="Assassin">Carl (Assassin)</option>
+            <option value="Wizard">Albus (Wizard)</option>
+            <option value="Hunter">Olaf (Hunter)</option>
+        </select>
+        <button type="submit">Commencer le jeu</button>
+    </form>
+    <script>
+        const form = document.getElementById('characterSelectionForm');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const selectedCharacter = document.getElementById('character').value;
+            let playerCharacter;
+            switch (selectedCharacter) {
+                case 'Fighter':
+                    playerCharacter = new Fighter('Grace');
+                    break;
+                case 'Paladin':
+                    playerCharacter = new Paladin('Ulder');
+                    break;
+                case 'Monk':
+                    playerCharacter = new Monk('Moana');
+                    break;
+                case 'Berserker':
+                    playerCharacter = new Berserker('Draven');
+                    break;
+                case 'Assassin':
+                    playerCharacter = new Assassin('Carl');
+                    break;
+                case 'Wizard':
+                    playerCharacter = new Wizard('Albus');
+                    break;
+                case 'Hunter':
+                    playerCharacter = new Hunter('Olaf');
+                    break;
+            }
+            const game = new Game(playerCharacter);
+            game.startGame();
+        });
+    </script>
+</body>
+</html>
