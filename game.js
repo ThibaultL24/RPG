@@ -68,6 +68,12 @@ export class Game {
   }
 
   startTurn(player) {
+    // Vérifiez d'abord si le joueur est encore "playing"
+    if (player.status !== "playing") {
+      console.log(`${player.name} ne peut pas jouer car il est hors de combat.`);
+      return;
+    }
+
     console.log(`⚔️ C'est le moment pour ${player.name} de jouer.`);
 
     // Récupérer les cibles valides à chaque tour
@@ -80,21 +86,13 @@ export class Game {
       return;
     }
 
-    // Si la cible est éliminée, trouver une nouvelle cible valide
+    // Choisir une victime aléatoire parmi les cibles possibles
     let victim =
       possibleVictims[Math.floor(Math.random() * possibleVictims.length)];
 
-    while (victim.status !== "playing") {
-      // Réitérer jusqu'à trouver une victime encore en vie
-      possibleVictims = possibleVictims.filter((p) => p.status === "playing");
-      victim =
-        possibleVictims[Math.floor(Math.random() * possibleVictims.length)];
-    }
+    player.dealDamage(victim); // Utiliser l'attaque normale
 
-    {
-      player.dealDamage(victim); // Utiliser l'attaque normale
-    }
-
+    // Vérifier si la victime est hors de combat après avoir subi des dégâts
     if (victim.hp <= 0) {
       victim.status = "looser"; // Mettre à jour le statut du personnage
       console.log(`${victim.name} est désormais hors de combat !`);
